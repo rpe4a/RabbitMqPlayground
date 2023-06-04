@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqPlayground", "src\RabbitMqPlayground\RabbitMqPlayground.csproj", "{570EF9AA-CDB5-4962-ABC1-A5ABB196EB21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqPlaygroundLibrary", "src\RabbitMqPlaygroundLibrary\RabbitMqPlaygroundLibrary.csproj", "{C9D56758-BB14-4918-8A5E-746DFC1B840F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OneWayMessaging", "OneWayMessaging", "{95103E9A-AFE8-40C7-ADBD-E679CA689782}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneWayMessagingSender", "src\OneWayMessagingSender\OneWayMessagingSender.csproj", "{0DE17C6D-7579-4D7B-BB4C-8E4DBC7A2E1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneWayMessagingReciever", "src\OneWayMessagingReciever\OneWayMessagingReciever.csproj", "{0287312B-6DC4-410A-B759-25A3335ADB72}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkerQueue", "WorkerQueue", "{EA2DFEF8-DA61-40D1-A260-CF6A8D4A94F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerQueueReceiver", "src\WorkerQueueReceiver\WorkerQueueReceiver.csproj", "{2A9629A8-769E-44E5-BA57-37B744669996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerQueueSender", "src\WorkerQueueSender\WorkerQueueSender.csproj", "{74398F00-F157-4C30-BC15-C6C9E0EED429}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{570EF9AA-CDB5-4962-ABC1-A5ABB196EB21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{570EF9AA-CDB5-4962-ABC1-A5ABB196EB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{570EF9AA-CDB5-4962-ABC1-A5ABB196EB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{570EF9AA-CDB5-4962-ABC1-A5ABB196EB21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9D56758-BB14-4918-8A5E-746DFC1B840F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9D56758-BB14-4918-8A5E-746DFC1B840F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9D56758-BB14-4918-8A5E-746DFC1B840F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9D56758-BB14-4918-8A5E-746DFC1B840F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DE17C6D-7579-4D7B-BB4C-8E4DBC7A2E1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DE17C6D-7579-4D7B-BB4C-8E4DBC7A2E1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DE17C6D-7579-4D7B-BB4C-8E4DBC7A2E1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DE17C6D-7579-4D7B-BB4C-8E4DBC7A2E1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0287312B-6DC4-410A-B759-25A3335ADB72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0287312B-6DC4-410A-B759-25A3335ADB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0287312B-6DC4-410A-B759-25A3335ADB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0287312B-6DC4-410A-B759-25A3335ADB72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A9629A8-769E-44E5-BA57-37B744669996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A9629A8-769E-44E5-BA57-37B744669996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A9629A8-769E-44E5-BA57-37B744669996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A9629A8-769E-44E5-BA57-37B744669996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74398F00-F157-4C30-BC15-C6C9E0EED429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74398F00-F157-4C30-BC15-C6C9E0EED429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74398F00-F157-4C30-BC15-C6C9E0EED429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74398F00-F157-4C30-BC15-C6C9E0EED429}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0DE17C6D-7579-4D7B-BB4C-8E4DBC7A2E1A} = {95103E9A-AFE8-40C7-ADBD-E679CA689782}
+		{0287312B-6DC4-410A-B759-25A3335ADB72} = {95103E9A-AFE8-40C7-ADBD-E679CA689782}
+		{2A9629A8-769E-44E5-BA57-37B744669996} = {EA2DFEF8-DA61-40D1-A260-CF6A8D4A94F9}
+		{74398F00-F157-4C30-BC15-C6C9E0EED429} = {EA2DFEF8-DA61-40D1-A260-CF6A8D4A94F9}
+	EndGlobalSection
+EndGlobal
