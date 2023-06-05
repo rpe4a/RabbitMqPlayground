@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using RabbitMQ.Client;
 using RabbitMqPlayground.Services;
+using RabbitMqPlaygroundLibrary;
 
 namespace RabbitMqPlayground // Note: actual namespace depends on the project name.
 {

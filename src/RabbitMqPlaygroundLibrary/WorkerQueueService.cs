@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace RabbitMqPlayground.Services;
+namespace RabbitMqPlaygroundLibrary;
 
 public class WorkerQueueService
 {
