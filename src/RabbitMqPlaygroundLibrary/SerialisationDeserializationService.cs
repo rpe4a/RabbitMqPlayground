@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System.IO.Compression;
+using System.Net.Mime;
 using System.Text.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -36,8 +37,15 @@ public class SerialisationDeserializationService
         basicProperties.Persistent = true;
         basicProperties.ContentType = MediaTypeNames.Application.Json;
         basicProperties.Type = typeof(T).ToString();
-        byte[] payload = JsonSerializer.SerializeToUtf8Bytes(data);
-        model.BasicPublish("", _queue, basicProperties, payload);
+        basicProperties.ContentEncoding = "gzip";
+
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(data);
+        using var to = new MemoryStream();
+        using var gZipStream = new GZipStream(to, CompressionMode.Compress);
+        gZipStream.Write(bytes, 0, bytes.Length);
+        gZipStream.Flush();
+
+        model.BasicPublish("", _queue, basicProperties, to.ToArray());
     }
 
     public void ReceiveMessages(IModel model)
@@ -52,11 +60,21 @@ public class SerialisationDeserializationService
                     MediaTypeNames.Application.Json,
                     @event.BasicProperties.ContentType,
                     StringComparison.OrdinalIgnoreCase)
+                && string.Equals(
+                    "gzip",
+                    @event.BasicProperties.ContentEncoding,
+                    StringComparison.OrdinalIgnoreCase)
                )
             {
                 var body = @event.Body;
+                
+                using var from = new MemoryStream(body.ToArray());
+                using var to = new MemoryStream();
+                using var gZipStream = new GZipStream(from, CompressionMode.Decompress);
+                gZipStream.CopyTo(to);
+                
                 var type = @event.BasicProperties.Type;
-                var message = JsonSerializer.Deserialize(body.Span, Type.GetType(type));
+                var message = JsonSerializer.Deserialize(to.ToArray(), Type.GetType(type));
 
                 Console.WriteLine(message);
             }
