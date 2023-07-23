@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using OneWayMessagingReciever;
 using RabbitMQ.Client;
 using RabbitMqPlayground.Services;
 
@@ -8,10 +9,30 @@ namespace RabbitMqPlayground // Note: actual namespace depends on the project na
     {
         static void Main(string[] args)
         {
-            var service = new OneWayMessageQueueService();
-            var model = service.GetRabbitMqConnection().CreateModel();
+            ReceiveSingleOneWayMessage();
 
-            ReceiveOneWayMessages(model, service);
+
+            // var service = new OneWayMessageQueueService();
+            // var model = service.GetRabbitMqConnection().CreateModel();
+            //
+            // ReceiveOneWayMessages(model, service);
+            // Console.ReadKey();
+        }
+
+        private static void ReceiveSingleOneWayMessage()
+        {
+            ConnectionFactory connectionFactory = new ConnectionFactory
+            {
+                HostName = "localhost",
+                UserName = "guest",
+                Password = "guest"
+            };
+
+            var connection = connectionFactory.CreateConnection();
+            IModel channel = connection.CreateModel();
+            channel.BasicQos(0, 1, false);
+            DefaultBasicConsumer basicConsumer = new OneWayMessageReceiver(channel);
+            channel.BasicConsume("OneWayMessageQueue", false, basicConsumer);
             Console.ReadKey();
         }
 
