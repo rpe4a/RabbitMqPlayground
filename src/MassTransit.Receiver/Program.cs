@@ -26,18 +26,16 @@ namespace MassTransit.Receiver // Note: actual namespace depends on the project 
                                        conf =>
                                        {
                                            conf.Consumer<RegisterCustomerConsumer>(sp);
+                                           conf.Consumer<RegisterDomainConsumer>(sp);
                                            conf.UseRetry((retryConfigurator) =>
                                                              retryConfigurator.SetRetryPolicy(
                                                                  (_) => Retry.Incremental(
                                                                      5, TimeSpan.FromSeconds(1),
                                                                      TimeSpan.FromSeconds(1))));
                                        });
-                
+
                 rabbit.ReceiveEndpoint($"{IRegisterCustomer.Queue}.error.newcustomers",
-                                       conf =>
-                                       {
-                                           conf.Consumer<RegisterCustomerFaultConsumer>(sp);
-                                       });
+                                       conf => { conf.Consumer<RegisterCustomerFaultConsumer>(sp); });
             });
 
             CancellationTokenSource cts = new CancellationTokenSource();
@@ -52,6 +50,7 @@ namespace MassTransit.Receiver // Note: actual namespace depends on the project 
             ServiceCollection container = new ServiceCollection();
 
             container.AddSingleton<ICustomerRepository, CustomerRepository>();
+            container.AddSingleton<RegisterDomainConsumer>();
             container.AddSingleton<RegisterCustomerConsumer>();
             container.AddSingleton<RegisterCustomerFaultConsumer>();
             container.AddSingleton<ScopedConsumeContextProvider>();

@@ -34,7 +34,9 @@ namespace MassTransit.Publisher // Note: actual namespace depends on the project
                                              RegisteredUtc = DateTime.UtcNow,
                                              Name = "Nice people LTD",
                                              Type = 1,
-                                             DefaultDiscount = 0
+                                             DefaultDiscount = 0,
+                                             Target = "Customers",
+                                             Importance = 1
                                          },
                                          c => c.FaultAddress =
                                                   new Uri(

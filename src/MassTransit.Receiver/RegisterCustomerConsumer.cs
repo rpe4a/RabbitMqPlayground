@@ -17,7 +17,6 @@ public class RegisterCustomerConsumer : IConsumer<IRegisterCustomer>
     {
         Console.WriteLine("A new customer has signed up, it's time to register it. Details: ");
         IRegisterCustomer newCustomer = context.Message;
-        throw new ArgumentException();
         repository.Save((Customer)newCustomer);
         return Task.FromResult(context.Message);
     }
