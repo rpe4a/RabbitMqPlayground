@@ -23,6 +23,8 @@ namespace MassTransit.Receiver // Note: actual namespace depends on the project 
                     settings.Username("guest");
                 });
 
+                rabbit.ConnectBusObserver(new BusObserver());
+
                 rabbit.ReceiveEndpoint(IRegisterCustomer.Queue,
                                        conf =>
                                        {
@@ -41,8 +43,8 @@ namespace MassTransit.Receiver // Note: actual namespace depends on the project 
 
             CancellationTokenSource cts = new CancellationTokenSource();
 
-            bus.ConnectReceiveObserver(new MessageReceiveObserver());
-            
+            // bus.ConnectReceiveObserver(new MessageReceiveObserver());
+
             await bus.StartAsync(cts.Token);
             Console.ReadKey();
             cts.Cancel();
