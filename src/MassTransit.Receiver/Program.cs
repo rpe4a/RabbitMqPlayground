@@ -2,6 +2,7 @@
 using MassTransit.Core;
 using MassTransit.Core.Services;
 using MassTransit.DependencyInjection;
+using MassTransit.Receiver.Observers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MassTransit.Receiver // Note: actual namespace depends on the project name.
@@ -40,6 +41,8 @@ namespace MassTransit.Receiver // Note: actual namespace depends on the project 
 
             CancellationTokenSource cts = new CancellationTokenSource();
 
+            bus.ConnectReceiveObserver(new MessageReceiveObserver());
+            
             await bus.StartAsync(cts.Token);
             Console.ReadKey();
             cts.Cancel();
