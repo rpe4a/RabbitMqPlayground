@@ -1,4 +1,5 @@
-﻿using MassTransit.Core;
+﻿using MassTransit.Configuration;
+using MassTransit.Core;
 using MassTransit.Core.Services;
 using MassTransit.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,21 @@ namespace MassTransit.Receiver // Note: actual namespace depends on the project 
                 });
 
                 rabbit.ReceiveEndpoint(IRegisterCustomer.Queue,
-                                       conf => { conf.Consumer<RegisterCustomerConsumer>(sp); });
+                                       conf =>
+                                       {
+                                           conf.Consumer<RegisterCustomerConsumer>(sp);
+                                           conf.UseRetry((retryConfigurator) =>
+                                                             retryConfigurator.SetRetryPolicy(
+                                                                 (_) => Retry.Incremental(
+                                                                     5, TimeSpan.FromSeconds(1),
+                                                                     TimeSpan.FromSeconds(1))));
+                                       });
+                
+                rabbit.ReceiveEndpoint($"{IRegisterCustomer.Queue}.error.newcustomers",
+                                       conf =>
+                                       {
+                                           conf.Consumer<RegisterCustomerFaultConsumer>(sp);
+                                       });
             });
 
             CancellationTokenSource cts = new CancellationTokenSource();
@@ -38,6 +53,7 @@ namespace MassTransit.Receiver // Note: actual namespace depends on the project 
 
             container.AddSingleton<ICustomerRepository, CustomerRepository>();
             container.AddSingleton<RegisterCustomerConsumer>();
+            container.AddSingleton<RegisterCustomerFaultConsumer>();
             container.AddSingleton<ScopedConsumeContextProvider>();
 
             return container.BuildServiceProvider();

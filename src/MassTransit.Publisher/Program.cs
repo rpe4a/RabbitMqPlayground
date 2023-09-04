@@ -25,16 +25,21 @@ namespace MassTransit.Publisher // Note: actual namespace depends on the project
                                              rabbitBusControl.GetSendEndpoint(
                                                  new Uri($"{rabbitMqAddress}/{IRegisterCustomer.Queue}"));
 
-            await sendEndpoint.Send<IRegisterCustomer>(new()
-            {
-                Address = "New Street",
-                Id = Guid.NewGuid(),
-                Preferred = true,
-                RegisteredUtc = DateTime.UtcNow,
-                Name = "Nice people LTD",
-                Type = 1,
-                DefaultDiscount = 0
-            });
+            await sendEndpoint
+                .Send<IRegisterCustomer>(new()
+                                         {
+                                             Address = "New Street",
+                                             Id = Guid.NewGuid(),
+                                             Preferred = true,
+                                             RegisteredUtc = DateTime.UtcNow,
+                                             Name = "Nice people LTD",
+                                             Type = 1,
+                                             DefaultDiscount = 0
+                                         },
+                                         c => c.FaultAddress =
+                                                  new Uri(
+                                                      "rabbitmq://localhost:5672/accounting/" +
+                                                      $"{IRegisterCustomer.Queue}.error.newcustomers"));
 
 
             Console.ReadKey();
